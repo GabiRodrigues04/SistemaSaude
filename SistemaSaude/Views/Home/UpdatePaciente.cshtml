@@ -1,0 +1,24 @@
+﻿@model SistemaSaude.Models.Paciente
+
+<div style="display: flex; justify-content: center">
+    <div class="mb-3" style="width: 550px">
+        <h2>Alterar informações do(a) Paciente <br /> @Model.NomePaciente</h2>
+
+        <form action="/Home/SaveUpdatePaciente" method="post">
+        <input type="hidden" name="IdPaciente" value="@Model.IdPaciente" />
+
+            <label class="form-label">Nome:</label>
+            <input type="text" name="NomePaciente" class="form-control" pattern=".{2,}" value="@Model.NomePaciente" /><br />
+
+            <label class="form-label">Data de Nascimento:</label>
+            <input type="date" name="DataNasc" class="form-control" value="@Model.DataNasc.ToString("yyyy-MM-dd")" /><br />
+
+            <label class="form-label">Telefone:</label>
+            <input type="text" name="Telefone" class="form-control" value="@Model.Telefone" pattern="[0-9]{11,15}" title="(Deve conter apenas números. Necessário ddd)"><br />
+
+            <button class="btn btn-primary" type="submit">Editar</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">Voltar</a>
+
+        </form>
+    </div>
+</div>

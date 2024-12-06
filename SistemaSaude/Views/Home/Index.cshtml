@@ -1,0 +1,60 @@
+﻿@model List<SistemaSaude.Models.Paciente>
+
+<div style="display: flex; justify-content: space-between;">
+    <div class="mb-3" style="width: 350px">
+        <h2>Novo Paciente</h2>
+
+        <form action="/Home/CreatePaciente" method="post">
+
+                <label class="form-label">Nome:</label>
+                <input type="text" name="NomePaciente" class="form-control" pattern=".{2,}" required/><br />
+
+                <label class="form-label">Data de Nascimento:</label>
+                <input type="date" name="DataNasc" class="form-control" required /><br />
+
+                <label class="form-label">Telefone:</label>
+                <input type="text" name="Telefone" class="form-control" pattern="[0-9]{11,15}" title="(Deve conter apenas números. Necessário ddd)" required><br/>
+
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </form>
+    </div>
+
+    <div style="width: 800px">
+        <h2>Lista de Pacientes</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Telefone</th>
+                    <th>Excluir </th>
+                    <th>Editar </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var paciente in Model)
+                {
+                    <tr>
+                        <td>@paciente.IdPaciente</td>
+                        <td>@paciente.NomePaciente</td>
+                        <td>@paciente.DataNasc.ToShortDateString()</td>
+                        <td>@paciente.Telefone</td>
+                        <td> 
+                            <form asp-action="DeletePaciente" method="post" onsubmit="return confirm('Tem certeza que deseja excluir o registro deste paciente?')">
+                                 <input type="hidden" name="id" value="@paciente.IdPaciente" />
+                                 <button type= "submit" class="btn btn-danger"> Excluir </button>
+                             </form>
+                        </td>
+                        <td>
+                            <form asp-action="UpdatePaciente" method="post">
+                                <input type="hidden" name="id" value="@paciente.IdPaciente" />
+                                <button type="submit" class="btn btn-primary"> Editar </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

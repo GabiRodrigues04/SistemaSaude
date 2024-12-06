@@ -1,0 +1,20 @@
+﻿@model SistemaSaude.Models.Consulta
+
+<div style="display: flex; justify-content: center">
+    <div class="mb-3" style="width: 550px">
+        <h2>Alterar informações da consulta @Model.IdConsulta</h2>
+
+        <form action="/Consultas/SaveUpdateConsulta" method="post">
+            <input type="hidden" name="IdConsulta" value="@Model.IdConsulta" />
+            <label class="form-label">Data da Consulta:</label>
+            <input type="datetime-local" name="DataConsulta" class="form-control" value="@Model.DataConsulta.ToString("yyyy-MM-ddTHH:mm")" /><br />
+
+            <label class="form-label">Observações:</label>
+            <textarea name="Observacoes" class="form-control" required>@Model.Observacoes</textarea><br />
+
+            <button class="btn btn-primary" type="submit">Editar</button>
+            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-primary">Voltar</a>
+
+        </form>
+    </div>
+</div>

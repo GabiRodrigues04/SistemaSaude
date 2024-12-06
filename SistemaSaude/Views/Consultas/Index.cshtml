@@ -1,0 +1,71 @@
+﻿@model List<SistemaSaude.Models.Consulta>
+@{
+    var pacientes = ViewBag.Pacientes as List<SistemaSaude.Models.Paciente>;
+}
+
+<div style="display: flex; justify-content: space-between;">
+    <div class="mb-3" style="width: 350px">
+        <h2>Agendar consulta</h2>
+        <div class="mb-3">
+        <form action="/Consultas/CreateConsulta" method="post">
+
+            <label class="form-label">Paciente:</label>
+            <select name="IdPaciente" class="form-select" required>
+                @foreach (var paciente in pacientes)
+                {
+                    <option value="@paciente.IdPaciente">@paciente.NomePaciente</option>
+                }
+            </select><br/>
+
+                <label class="form-label">Data da Consulta:</label>
+                <input type="datetime-local" name="DataConsulta" class="form-control" required /><br />
+
+                <label class="form-label">Observações:</label>
+                <textarea name="Observacoes" class="form-control" required></textarea><br />
+
+            <button type="submit" class="btn btn-primary">Agendar</button>
+        </form>
+        </div>
+    </div>
+
+    <div style="width: 800px">
+        <h2>Consultas agendadas</h2>
+        <div class="mb-3">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Data</th>
+                        <th>Observações</th>
+                        <th>Excluir </th>
+                        <th>Editar </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var consulta in Model)
+                    {
+                        <tr>
+                            <td>@consulta.IdConsulta</td>
+                            <td>@consulta.NomePaciente</td>
+                            <td>@consulta.DataConsulta.ToString("g")</td>
+                            <td>@consulta.Observacoes</td>
+                            <td>
+                                <form asp-action="DeleteConsulta" method="post" onsubmit="return confirm('Tem certeza que deseja excluir o registro esta consulta?')">
+                                    <input type="hidden" name="id" value="@consulta.IdConsulta" />
+                                    <button type="submit" class="btn btn-danger"> Excluir </button>
+                                </form>
+                            </td>
+                            <td>
+                                <form asp-action="UpdateConsulta" method="post">
+                                    <input type="hidden" name="id" value="@consulta.IdConsulta" />
+                                    <button type="submit" class="btn btn-primary"> Editar </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
